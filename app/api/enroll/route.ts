@@ -1,9 +1,7 @@
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
-import { Resend } from "resend"
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { sendEmail } from "@/lib/email"
 
 export async function POST(request: Request) {
   try {
@@ -26,8 +24,7 @@ export async function POST(request: Request) {
     // 4. Send confirmation email
 
     // For now, we'll just send a confirmation email
-    await resend.emails.send({
-      from: "CourseHub <noreply@coursehub.com>",
+    await sendEmail({
       to: session.user.email!,
       subject: "Welcome to Your New Course!",
       html: `
