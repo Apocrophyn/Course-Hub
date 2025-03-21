@@ -21,7 +21,7 @@ export async function middleware(req: NextRequest) {
     '/api/webhook'
   ]
 
-  // Check if the current path is a public route
+  // Check if the current path is a public route or starts with /courses/
   const isPublicRoute = publicRoutes.some(route => 
     req.nextUrl.pathname === route || 
     req.nextUrl.pathname.startsWith('/courses/')
