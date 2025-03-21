@@ -10,17 +10,18 @@ import { Star, Clock, Users, CheckCircle } from "lucide-react"
 import EnrollButton from "@/components/enroll-button"
 import { courses } from "@/data/courses"
 
-export default function CourseDetailPage({
-  params,
-}: {
-  params: { id: string }
-}) {
-  const [course, setCourse] = useState<any>(null)
+interface PageProps {
+  params: {
+    id: string
+  }
+}
 
-  useEffect(() => {
-    const foundCourse = courses.find((c) => c.id === params.id)
-    setCourse(foundCourse)
-  }, [params.id])
+async function getCourse(id: string) {
+  return courses.find((c) => c.id === id)
+}
+
+export default async function CourseDetailPage({ params }: PageProps) {
+  const course = await getCourse(params.id)
 
   if (!course) {
     return (
